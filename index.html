@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+        "mindar-face-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-three.prod.js"
+      }
+    }
+  </script>
+  <script type="module" src="CustomJs/main.js"></script>
+  <script type="module" src="CustomJs/sceneSetup.js"></script>
+  <script type="module" src="CustomJs/colorButton.js"></script>
+  <script type="module" src="CustomJs/modelVisibility.js"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+  <button id="button1" class="buttonhi1" onclick="toggleHighlight(1)">
+    <img id="modelviewBut" src="./textures/trim3dhighlight.png" alt="" style="scale: 0.5; ">
+  </button>
+
+<button id="button2" class="buttonhi2" onclick="toggleHighlight(2)">
+  <img id="arviewBut" src="./textures/ARimage.png" alt="" style="scale: 0.5; ">
+</button>
+  <script>
+  
+
+function toggleHighlight(buttonNumber) {
+    var button = document.getElementById("button" + buttonNumber);
+    if (!button.classList.contains("highlight")) {
+      // Remove highlight from all buttons
+      var buttons1 = document.querySelectorAll('.buttonhi1');
+      buttons1.forEach(function(btn) {
+        btn.classList.remove('highlight');
+      });
+      var buttons2 = document.querySelectorAll('.buttonhi2');
+      buttons2.forEach(function(btn) {
+        btn.classList.remove('highlight');
+      });
+      // Add highlight to the clicked button
+    //  button.classList.add("highlight");
+      
+    var modeliewBut1 = document.getElementById("modelviewBut");
+    var ariewBut1 = document.getElementById("arviewBut");
+
+      // Call respective function based on button clicked
+      if(buttonNumber === 1) {
+       // button.classList.add("highlight");
+       modeliewBut1.src="./textures/trim3dhighlight.png";
+       ariewBut1.src="./textures/ARimage.png";
+        button1Function();
+      } else if (buttonNumber === 2) {
+       // button.classList.add("highlight");
+
+        modeliewBut1.src="./textures/trim3d.png";
+       ariewBut1.src="./textures/ARHighlight.png";
+        button2Function();
+      }
+    }
+  }
+  
+  function button1Function() {
+   
+    var model3dd = document.getElementById("model3d");
+    model3dd.style.display = "block";
+    
+    var whitePanelw = document.getElementById("whitepanel");
+    whitePanelw.style.display = "block";
+
+    // Function for Button 1
+    console.log("Button 1 Clicked");
+    // Add your functionality here
+}
+  
+  function button2Function() {
+    lipartoggle();//switch off
+    var model3dd = document.getElementById("model3d");
+    model3dd.style.display = "none";
+    
+    var whitePanelw = document.getElementById("whitepanel");
+    whitePanelw.style.display = "none";
+
+
+    // Function for Button 2
+    console.log("Button 2 Clicked");
+    // Add your functionality here
+  }
+  
+  </script>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+     
+    }
+
+    #container {
+      width: 70vw;
+    
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      right: -30vh;
+      z-index: 4;
+      display: none;
+    }
+
+    .example-container {
+      overflow: hidden;
+      position: fixed;
+      /* position: absolute; */
+      width: 70vw;
+      z-index: 4;
+      height: 100vh;
+      left: 0vw;
+      top: 0vw;
+    }
+
+    .options-panel {
+      position: fixed;
+      /* left: 46vw;
+      top: 0; */     
+      left: 62vw;
+      top: 41vw;   
+      z-index: 6;
+    }
+
+    /* .options-panel img {
+      border: solid 2px;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      cursor: pointer;
+    } */
+
+    .options-panel img {
+  border: solid 2px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 50%; /* Make it circle */
+ 
+
+}
+
+    .options-panel img.selected {
+      border-color: rgb(126, 128, 0);
+    }
+    .example-container {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        
+      }
+      #example-control-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	background: none;
+	height: 30px;
+	z-index: 2;
+      }
+      #example-control-overlay >div {
+	position: absolute;
+	right: 0;
+      }
+
+      model-viewer{width: 800px;height: 800px;margin: 0;}
+  </style>
+
+  <div class="title">
+    
+      <img src="./textures/vrvirtuals.png" alt="Description of the image">
+  
+  </div>
+</head>
+
+
+<body>
+ 
+  <div id="iconcontainer">
+   
+    <div class="options-panel">
+      <img id="hat1"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png" style="display: none;" />
+
+        <img id="necklace2"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png" style="display: none;" />
+
+        <img id="necklace3"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png" style="display: none;" />
+        
+      <img id="hat2"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/thumbnail.png" style="display: none;" />
+      <img id="glasses1"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/thumbnail.png" style="display: none;" />
+      <img id="glasses2"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png" onclick="switchModel('Sunglass');"/>
+      <!-- <img id="earring"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/thumbnail.png" /> -->
+        <img id="glasses3"
+        src="./textures/Glassyello1.png" onclick="switchModel('Glass1yellow');" />
+        <img id="glasses4"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png" onclick="switchModel('Glass2Yellow');" />
+        <img id="glasses5"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png" onclick="switchModel('GlassBlack1');" />
+        <img id="glasses6"
+        src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png" onclick="switchModel('GlassBlue1');" />
+
+        <!-- <img id="lips"
+        src="./textures/lips.png" onclick='lipartoggle();'/> -->
+
+        
+    </div>
+   
+
+  </div>
+
+  <div id="model3d" class="modelViewer3d">
+    <!-- <model-viewer src="./models/Glass1yellow.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1.09" exposure="0.78" shadow-softness="0.77" auto-rotate min-camera-orbit="auto auto 5.66m" min-field-of-view="30deg">
+      <div class="progress-bar hide" slot="progress-bar">
+          <div class="update-bar"></div>
+      </div>
+      </model-viewer> -->
+
+  <!-- <model-viewer src="./models/Glass1yellow.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="commerce" poster="poster.webp" shadow-intensity="1" autoplay>
+    <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+    </div>
+  
+  </model-viewer>  -->
+  <model-viewer src="./models/Glass1yellow.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1.09" exposure="0.78" shadow-softness="0.77">
+    <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+    </div>
+  
+  </model-viewer> 
+  
+  </div> 
+  <div class="cameracontainer" id="cameracontainer" >
+   
+
+    <div id="whitepanel" class="panel">
+     
+  </div>
+
+
+    <div id="container"></div>
+
+    <!-- example-container -->
+    <div class="example-container">
+     
+      <a-scene mindar-face embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
+        vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <a-assets>
+          <a-asset-item id="hatModel" src="./models/necklace.glb"></a-asset-item>
+          <a-asset-item id="neckalce2" src="./models/necklace2.glb"></a-asset-item>
+          <a-asset-item id="neckalce3" src="./models/necklace3.glb"></a-asset-item>
+          <a-asset-item id="glassesModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/scene.gltf"></a-asset-item>
+          <!-- <a-asset-item id="glassesModel2"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"></a-asset-item> -->
+            <a-asset-item id="glassesModel2"
+             src="./models/Sunglass.glb" ></a-asset-item>
+        
+
+            <a-asset-item id="glassesModel3"
+            src="./models/Glass1yellow.glb"></a-asset-item>
+
+            <a-asset-item id="glassesModel4"
+            src="./models/Glass2Yellow.glb"></a-asset-item>
+
+            <a-asset-item id="glassesModel5"
+            src="./models/GlassBlack1.glb"></a-asset-item>
+
+            <a-asset-item id="glassesModel6"
+            src="./models/GlassBlue1.glb"></a-asset-item>
+
+
+
+          <a-asset-item id="hatModel2"
+            src="./models/Glass1yellow.glb"></a-asset-item>
+          <a-asset-item id="earringModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/scene.gltf"></a-asset-item>
+        </a-assets>
+  
+        <a-camera active="false" position="0 0 0"></a-camera>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model mindar-face-occluder position="0 -0.3 0.15" rotation="0 0 0" scale="0.065 0.065 0.065"
+            src="#headModel"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model rotation="0 -90 0" position="0 -1.8 -1" scale="0.7 0.7 0.7" src="#hatModel" class="hat1-entity"
+            visible="false"></a-gltf-model>
+        </a-entity>
+  
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model rotation="0 -90 0" position="0 -1.8 -1" scale="0.7 0.7 0.7" src="#neckalce2" class="necklace2-entity"
+            visible="false"></a-gltf-model>
+        </a-entity>
+  
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model rotation="0 -90 0" position="0 -2 -1" scale="0.9 0.9 0.9" src="#neckalce3" class="necklace3-entity"
+            visible="false"></a-gltf-model>
+        </a-entity>
+  
+  
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model rotation="0 -0 0" position="0 -0.2 -0.5" scale="0.008 0.008 0.008" src="#hatModel2"
+            class="hat2-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 -0 0" position="0 0 0" scale="0.01 0.01 0.01" src="#glassesModel"
+            class="glasses1-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 90 0" position="0 -0.05 -0.5" scale="0.5 0.5 0.5" src="#glassesModel2"
+            class="glasses2-entity" visible="false"></a-gltf-model>
+        </a-entity>
+
+        <!-- customarglass -->
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 0 0" position="0 -3.5 -0.35" scale="6.7 6.7 6.7" src="#glassesModel3"
+            class="glasses3-entity" visible="false"></a-gltf-model>
+        </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 0 0" position="0 -3.5 -0.35" scale="6.7 6.7 6.7" src="#glassesModel4"
+            class="glasses4-entity" visible="false"></a-gltf-model>
+        </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 0 0" position="0 -3.3 -0.3" scale="6.3 6.3 6.3" src="#glassesModel5"
+            class="glasses5-entity" visible="false"></a-gltf-model>
+        </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 0 0" position="0 -3.3 -0.3" scale="6.3 6.3 6.3" src="#glassesModel6"
+            class="glasses6-entity" visible="false"></a-gltf-model>
+        </a-entity>
+
+        <a-entity mindar-face-target="anchorIndex: 127">
+          <a-gltf-model rotation="-0.1 -0 0" position="0 -0.3 -0.3" scale="0.05 0.05 0.05" src="#earringModel"
+            class="earring-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 356">
+          <a-gltf-model rotation="0.1 -0 0" position="0 -0.3 -0.3" scale="0.05 0.05 0.05" src="#earringModel"
+            class="earring-entity" visible="false"></a-gltf-model>
+        </a-entity>
+      </a-scene>
+    </div>
+
+  
+ 
+
+
+
+  <link rel="stylesheet" href="Css/styles.css">
+
+  <!-- <div class="dropdownlip">
+  	<div class="sec-center"> 	
+	  	<input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+	  	<label class="for-dropdown" for="dropdown">Select Lips Colour<i class="uil uil-arrow-down"></i></label>
+  		<div class="section-dropdown"> 
+  		
+  			<a href= "#" > <button class="buttonlipdropdown color-button" data-color="0xff0000">Red<i class="uil uil-arrow-right"></i> </button></a>
+        <a href= "#" > <button class="buttonlipdropdown color-button" data-color="0x00ff00">Green<i class="uil uil-arrow-right"></i> </button></a>
+        <a href= "#" > <button class="buttonlipdropdown color-button" data-color="0x0000ff">Blue<i class="uil uil-arrow-right"></i> </button></a>
+  		</div>
+  	</div>
+  </div>
+
+
+<div class="dropdownchains">
+  <div class="sec-center">    
+    <input class="dropdown" type="checkbox" id="dropdown-2" name="dropdown-2"/>
+    <label class="for-dropdown" for="dropdown-2">Select Chains<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown"> 
+      <a href= "#" onclick='setupModelVisibilityParams("hat1", "hat1-entity", true);' > <button class="buttonlipdropdown">Neckalce 1<i class="uil uil-arrow-right"></i> </button></a>
+      <a href= "#" onclick='setupModelVisibilityParams("necklace2", "necklace2-entity", true);' > <button class="buttonlipdropdown">Neckalce 2<i class="uil uil-arrow-right"></i> </button></a>
+      <a href= "#" onclick='setupModelVisibilityParams("necklace3", "necklace3-entity", true);'> <button class="buttonlipdropdown " >Neckalce 3<i class="uil uil-arrow-right"></i> </button></a>
+    </div>
+</div>
+</div> -->
+
+
+
+</body>
+
+<script>
+  //Model viewer
+  function switchModel(modelName) {
+    const modelViewer = document.querySelector('model-viewer');
+    
+    // Check if the model-viewer element exists
+    if (modelViewer) {
+        let modelSrc;
+        
+        // Determine the model source based on the model name
+        switch (modelName) {
+            case 'Sunglass':
+                modelSrc = './models/Sunglass.glb';
+                break;
+            case 'Glass1yellow':
+                modelSrc = './models/Glass1yellow.glb';
+                break;
+            case 'Glass2Yellow':
+                modelSrc = './models/Glass2Yellow.glb';
+                break;
+            case 'GlassBlack1':
+                modelSrc = './models/GlassBlack1.glb';
+                break;
+            case 'GlassBlue1':
+                modelSrc = './models/GlassBlue1.glb';
+                break;
+            // Add more cases for additional models as needed
+            default:
+                console.error('Invalid model name');
+                return; // Exit the function if the model name is invalid
+        }
+        
+        // Change the src attribute of the model-viewer element
+        modelViewer.setAttribute('src', modelSrc);
+    } else {
+        console.error('model-viewer element not found');
+    }
+}
+    // Call switchModelViewer function with the desired model
+    switchModel('Sunglass');
+</script>
+
+</html>
